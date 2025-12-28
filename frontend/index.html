@@ -5,21 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Road Guardian Dashboard</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+#map {
+    height: 400px;
+    border-radius: 15px;
+}
+</style>
+
 </head>
 <body>
 
 <h1>🚦 Road Guardian – Smart Safety System</h1>
 
 <div class="card">
+    <h3>🗺️ Live Incident Map</h3>
+    <div id="map"></div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClyusX253L3T3TtZOOQEEeV42fD13AWWs"></script>
+
+<div class="card">
     <h3>Report Road Incident</h3>
+
     <input id="type" placeholder="Accident / Pothole / Crime">
     <input id="lat" placeholder="Latitude">
     <input id="lon" placeholder="Longitude">
+
     <select id="severity">
         <option>Low</option>
         <option>Medium</option>
         <option>High</option>
     </select>
+
+    <p>
+        <b>Predicted Accident Risk:</b>
+        <span id="risk">---</span>
+    </p>
+
     <button onclick="report()">Submit</button>
 </div>
 
