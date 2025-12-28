@@ -3,6 +3,8 @@ from flask_cors import CORS
 import sqlite3
 import datetime
 import os
+import joblib
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -62,3 +64,24 @@ def emergency_alert():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+model = joblib.load("accident_model.pkl")
+
+@app.route("/predict-risk", methods=["POST"])
+def predict_risk():
+    data = request.json
+
+    lat = float(data["lat"])
+    lon = float(data["lon"])
+    severity_map = {"Low": 1, "Medium": 2, "High": 3}
+    severity = severity_map.get(data["severity"], 1)
+
+    hour = datetime.datetime.now().hour
+
+    prediction = model.predict([[lat, lon, severity, hour]])[0]
+
+    risk_map = {0: "LOW", 1: "MEDIUM", 2: "HIGH"}
+
+    return jsonify({
+        "predicted_risk": risk_map[prediction]
+    })
