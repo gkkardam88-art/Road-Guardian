@@ -1,6 +1,10 @@
-const API = "http://127.0.0.1:5000";
+const API = "https://road-guardian-backend.onrender.com";
 
 function report() {
+    const btn = document.querySelector("button");
+    btn.innerText = "Submitting...";
+    btn.disabled = true;
+
     fetch(API + "/report", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -12,16 +16,30 @@ function report() {
         })
     })
     .then(res => res.json())
-    .then(data => alert(data.status));
+    .then(data => {
+        alert("✅ Incident Reported Successfully");
+        btn.innerText = "Submit";
+        btn.disabled = false;
+        loadIncidents();
+    });
 }
 
-fetch(API + "/incidents")
-.then(res => res.json())
-.then(data => {
-    let list = document.getElementById("list");
-    data.forEach(i => {
-        let li = document.createElement("li");
-        li.innerText = `${i.type} | ${i.severity} | ${i.time}`;
-        list.appendChild(li);
+function loadIncidents() {
+    fetch(API + "/incidents")
+    .then(res => res.json())
+    .then(data => {
+        let list = document.getElementById("list");
+        list.innerHTML = "";
+        data.reverse().forEach(i => {
+            let li = document.createElement("li");
+            li.innerHTML = `
+                🚨 <b>${i.type}</b><br>
+                Severity: ${i.severity}<br>
+                ⏱ ${i.time}
+            `;
+            list.appendChild(li);
+        });
     });
-});
+}
+
+loadIncidents();
