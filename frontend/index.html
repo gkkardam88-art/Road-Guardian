@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Guardian Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🚦 Road Guardian – Smart Safety System</h1>
+
+<div class="card">
+    <h3>Report Road Incident</h3>
+    <input id="type" placeholder="Accident / Pothole / Crime">
+    <input id="lat" placeholder="Latitude">
+    <input id="lon" placeholder="Longitude">
+    <select id="severity">
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+    </select>
+    <button onclick="report()">Submit</button>
+</div>
+
+<div class="card">
+    <h3>Live Incidents</h3>
+    <ul id="list"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
