@@ -68,6 +68,9 @@ function loadIncidents() {
 
 loadIncidents();
 
+
+window.onload = initMap;
+
 let map;
 
 function initMap() {
@@ -88,5 +91,3 @@ function initMap() {
             });
         });
 }
-
-window.onload = initMap;
